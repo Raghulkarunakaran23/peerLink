@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PeerLink - XP Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../static/xp_dashboard.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <h1 class="logo">PeerLink</h1>
+            <ul class="nav-links">
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('events') }}">Events</a></li>
+                <li><a href="{{ url_for('circles') }}">Circles</a></li>
+                <li><a href="{{ url_for('social_feed') }}">MemeHub</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- User XP Overview -->
+        <section class="xp-overview">
+            <div class="user-info">
+                <img src="../static/images/profile.png" alt="User Avatar" class="avatar">
+                <h2>{{ session['username'] }}</h2>
+                <p>🔥 Level {{ user.level }} – {{ user.title }}</p>
+                <div class="xp-bar">
+                    <div class="xp-fill" style="width: {{ user.xp_percentage | default(0) }}%;"></div>
+                    <!-- Ensure user.xp_percentage is passed as a valid number -->
+                </div>
+                <p>{{ user.xp }}/{{ user.next_level_xp }} XP</p>
+            </div>
+        </section>
+
+        <!-- Milestones & Achievements -->
+        <section class="milestones">
+            <h2>Milestones & Achievements</h2>
+            <div class="milestone-grid">
+                {% for milestone in milestones %}
+                <div class="milestone-card {% if milestone.unlocked %}unlocked{% else %}locked{% endif %}">
+                    <div class="icon">
+                        <img src="{{ milestone.icon_url }}" alt="{{ milestone.title }}">
+                    </div>
+                    <h3>{{ milestone.title }}</h3>
+                    <p>{{ milestone.description }}</p>
+                    <span class="status">{% if milestone.unlocked %}✔️ Unlocked{% else %}🔒 Locked{% endif %}</span>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- Reward Redemption -->
+        <section class="rewards">
+            <h2>🛍️ Available Rewards</h2>
+            <div class="reward-grid">
+                {% for reward in rewards %}
+                <div class="reward-card">
+                    <img src="{{ reward.image_url }}" alt="{{ reward.name }}">
+                    <h3>{{ reward.name }}</h3>
+                    <p>Cost: {{ reward.xp_cost }} XP</p>
+                    <form action="/redeem_reward/{{ reward.id }}" method="POST">
+                        <button type="submit" class="btn {% if user.xp < reward.xp_cost %}disabled{% endif %}" {% if user.xp < reward.xp_cost %}disabled{% endif %}>
+                            Redeem
+                        </button>
+                    </form>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- XP History -->
+        <section class="xp-history">
+            <h2>XP History</h2>
+            <ul class="history-list">
+                {% for entry in xp_history %}
+                <li>
+                    <span>{{ entry.date }}</span>
+                    <span>{{ entry.reason }}</span>
+                    <span>+{{ entry.amount }} XP</span>
+                </li>
+                {% endfor %}
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 PeerLink. All rights reserved.</p>
+    </footer>
+</body>
+</html>

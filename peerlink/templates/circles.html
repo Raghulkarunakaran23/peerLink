@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PeerLink - Circles</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../static/circles.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <h1 class="logo">PeerLink</h1>
+            <ul class="nav-links">
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('events') }}">Events</a></li>
+                <li><a href="{{ url_for('xp_dashboard') }}">XP</a></li>
+                <li><a href="{{ url_for('social_feed') }}">MemeHub</a></li>
+            </ul>
+            <div class="user-profile">
+                <img src="../static/images/profile.png" alt="User Profile">
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Search & Filter Bar -->
+        <section class="filter-section">
+            <h2>Join Your Communities</h2>
+            <form action="/circles" method="GET" class="form">
+                <input type="text" name="query" placeholder="Search circles...">
+                <button type="submit" class="btn">Search</button>
+            </form>
+        </section>
+
+        <!-- Circles Grid -->
+        <section class="circles-grid">
+            {% for circle in circles %}
+            <div class="circle-card">
+                <div class="circle-image">
+                    <img src="{{ circle.image_url }}" alt="{{ circle.name }}">
+                </div>
+                <h3>{{ circle.name }}</h3>
+                <p>{{ circle.description }}</p>
+                <div class="tags">
+                    {% for tag in circle.tags %}
+                    <span class="tag">#{{ tag }}</span>
+                    {% endfor %}
+                </div>
+                <form action="{{ url_for('join_circle', circle_id=circle.id) }}" method="POST">
+                    {% if circle.joined %}
+                    <button type="submit" class="btn joined">Joined ✅</button>
+                    {% else %}
+                    <button type="submit" class="btn">Join</button>
+                    {% endif %}
+                </form>
+            </div>
+            {% endfor %}
+        </section>
+
+        <!-- User's Joined Circles -->
+        <section class="joined-circles">
+            <h2>Your Circles</h2>
+            <div class="joined-grid">
+                {% for circle in joined_circles %}
+                <div class="joined-card">
+                    <h4>{{ circle.name }}</h4>
+                    <p>XP Earned: {{ circle.xp }}</p>
+                    <form action="{{ url_for('leave_circle', circle_id=circle.id) }}" method="POST">
+                        <button type="submit" class="btn btn-danger">Leave</button>
+                    </form>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 PeerLink. All rights reserved.</p>
+    </footer>
+</body>
+</html>

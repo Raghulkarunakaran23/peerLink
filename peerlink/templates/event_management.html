@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PeerLink - Event Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../static/event_management.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <h1 class="logo">PeerLink</h1>
+            <ul class="nav-links">
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="#add-event">Add Event</a></li>
+                <li><a href="#search">Search</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="add-event" class="card">
+            <h2>Add Event</h2>
+            <form action="/add" method="POST" class="form">
+                <input type="text" name="title" placeholder="Event Title" required>
+                <input type="date" name="date" required>
+                <input type="text" name="location" placeholder="Location" required>
+                <textarea name="description" placeholder="Description"></textarea>
+                <button type="submit" class="btn">Add Event</button>
+            </form>
+        </section>
+
+        <section id="search" class="card">
+            <h2>Search Events</h2>
+            <form action="/search" method="GET" class="form">
+                <input type="text" name="query" placeholder="Search by title or location">
+                <button type="submit" class="btn">Search</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 PeerLink. All rights reserved.</p>
+    </footer>
+</body>
+</html>

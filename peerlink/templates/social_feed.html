@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PeerLink - Social Feed</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../static/social_feed.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <h1 class="logo">PeerLink</h1>
+            <ul class="nav-links">
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('events') }}">Events</a></li>
+                <li><a href="{{ url_for('circles') }}">Circles</a></li>
+                <li><a href="{{ url_for('xp_dashboard') }}">XP</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Confession Input Area -->
+        <section class="confession-input">
+            <h2>Share Your Thoughts</h2>
+            <form action="{{ url_for('social_feed') }}" method="POST" enctype="multipart/form-data" class="form">
+                <textarea name="content" placeholder="What’s on your mind?" required></textarea>
+                <input type="file" name="image" accept="image/*">
+                <select name="badge" class="badge-picker">
+                    <option value="🕶️">🕶️ Cool</option>
+                    <option value="🎭">🎭 Mysterious</option>
+                    <option value="😎">😎 Chill</option>
+                    <option value="🔥">🔥 hawt</option>
+                </select>
+                <button type="submit" class="btn">Post</button>
+            </form>
+        </section>
+
+        <!-- Confession Feed -->
+        <section class="confession-feed">
+            <h2>Anonymous Feed</h2>
+            <div class="feed">
+                {% for post in posts %}
+                <div class="post-card">
+                    <div class="post-header">
+                        <span class="badge">{{ post.badge }}</span>
+                        <span class="timestamp">{{ post.timestamp }}</span>
+                    </div>
+                    <div class="post-content">
+                        <p>{{ post.content }}</p>
+                        {% if post.image_url %}
+                        <img src="{{ post.image_url }}" alt="Post Image">
+                        {% endif %}
+                    </div>
+                    <div class="post-footer">
+                        <form action="/like_post/{{ post.id }}" method="POST" class="like-form">
+                            <button type="submit" class="like-btn">❤️</button>
+                            <span class="like-count">{{ post.likes }}</span>
+                        </form>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 PeerLink. All rights reserved.</p>
+    </footer>
+</body>
+</html>

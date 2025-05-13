@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PeerLink - Profile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Nunito:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../static/profile.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <h1 class="logo">PeerLink</h1>
+            <ul class="nav-links">
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('events') }}">Events</a></li>
+                <li><a href="{{ url_for('circles') }}">Circles</a></li>
+                <li><a href="{{ url_for('xp_dashboard') }}">XP</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Edit Bio Section -->
+        <section id="edit-bio" class="edit-profile">
+            <h2>Edit Bio</h2>
+            <form action="{{ url_for('update_bio') }}" method="POST" class="form">
+                <textarea name="bio" placeholder="Write your bio here..." required>{{ user.bio or '' }}</textarea>
+                <div class="button-group">
+                    <button type="submit" class="btn">Update Bio</button>
+                </div>
+            </form>
+            <form action="{{ url_for('delete_bio') }}" method="POST" class="form">
+                <div class="button-group">
+                    <button type="submit" class="btn btn-danger">Delete Bio</button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 PeerLink. All rights reserved.</p>
+    </footer>
+</body>
+</html>

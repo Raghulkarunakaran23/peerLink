@@ -1,0 +1,73 @@
++-------------------+-------------------+---------------------------------------------+
+| Table Name        | Column Name       | Description                                 |
++-------------------+-------------------+---------------------------------------------+
+| student_login     | id                | Primary key, auto-incremented              |
+|                   | name              | Full name of the user                      |
+|                   | bio               | Short bio of the user                      |
+|                   | mobile            | Mobile number                              |
+|                   | username          | Unique username                            |
+|                   | password          | Hashed password                            |
+|                   | email             | Unique email address                       |
++-------------------+-------------------+---------------------------------------------+
+| events            | id                | Primary key, auto-incremented              |
+|                   | title             | Title of the event                         |
+|                   | date              | Date of the event                          |
+|                   | location          | Location of the event                      |
+|                   | description       | Description of the event                   |
++-------------------+-------------------+---------------------------------------------+
+| user_event        | id                | Primary key, auto-incremented              |
+|                   | user_id           | Foreign key referencing student_login(id)  |
+|                   | event_id          | Foreign key referencing events(id)         |
++-------------------+-------------------+---------------------------------------------+
+| circles           | id                | Primary key, auto-incremented              |
+|                   | name              | Name of the circle                         |
+|                   | description       | Description of the circle                  |
+|                   | image_url         | URL of the circle's image                  |
++-------------------+-------------------+---------------------------------------------+
+| user_circle       | id                | Primary key, auto-incremented              |
+|                   | user_id           | Foreign key referencing student_login(id)  |
+|                   | circle_id         | Foreign key referencing circles(id)        |
++-------------------+-------------------+---------------------------------------------+
+| posts             | id                | Primary key, auto-incremented              |
+|                   | content           | Content of the post                        |
+|                   | badge             | Badge associated with the post             |
+|                   | image_url         | URL of the post's image                    |
+|                   | user_id           | Foreign key referencing student_login(id)  |
+|                   | timestamp         | Timestamp of the post                      |
+|                   | likes             | Number of likes on the post                |
++-------------------+-------------------+---------------------------------------------+
+| user_xp           | user_id           | Primary key, foreign key referencing       |
+|                   |                   | student_login(id)                          |
+|                   | xp                | XP points earned by the user               |
+|                   | level             | Level of the user                          |
+|                   | title             | Title of the user                          |
++-------------------+-------------------+---------------------------------------------+
+| milestones        | id                | Primary key, auto-incremented              |
+|                   | user_id           | Foreign key referencing student_login(id)  |
+|                   | title             | Title of the milestone                     |
+|                   | description       | Description of the milestone               |
+|                   | icon_url          | URL of the milestone's icon                |
+|                   | unlocked          | Boolean indicating if the milestone is     |
+|                   |                   | unlocked                                   |
++-------------------+-------------------+---------------------------------------------+
+| rewards           | id                | Primary key, auto-incremented              |
+|                   | name              | Name of the reward                         |
+|                   | description       | Description of the reward                  |
+|                   | image_url         | URL of the reward's image                  |
+|                   | xp_cost           | XP cost to redeem the reward               |
++-------------------+-------------------+---------------------------------------------+
+| xp_history        | id                | Primary key, auto-incremented              |
+|                   | user_id           | Foreign key referencing student_login(id)  |
+|                   | date              | Timestamp of the XP change                 |
+|                   | reason            | Reason for the XP change                   |
+|                   | amount            | Amount of XP changed                       |
++-------------------+-------------------+---------------------------------------------+
+| user_bio          | user_id           | Primary key, foreign key referencing       |
+|                   |                   | student_login(id)                          |
+|                   | bio               | Bio of the user                            |
++-------------------+-------------------+---------------------------------------------+
+| user_rewards      | id                | Primary key, auto-incremented              |
+|                   | user_id           | Foreign key referencing student_login(id)  |
+|                   | reward_id         | Foreign key referencing rewards(id)        |
+|                   | redeemed_at       | Timestamp of reward redemption             |
++-------------------+-------------------+---------------------------------------------+

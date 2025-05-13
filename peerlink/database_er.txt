@@ -1,0 +1,123 @@
+Entities and Relationships:
+
+1. **Entity: student_login**
+   - Attributes:
+     - id (Primary Key)
+     - name
+     - bio
+     - mobile
+     - username (Unique)
+     - password
+     - email (Unique)
+
+2. **Entity: events**
+   - Attributes:
+     - id (Primary Key)
+     - title
+     - date
+     - location
+     - description
+
+3. **Entity: user_event**
+   - Attributes:
+     - id (Primary Key)
+     - user_id (Foreign Key referencing student_login.id)
+     - event_id (Foreign Key referencing events.id)
+   - Relationship Name: RSVP
+     - Many-to-Many between `student_login` and `events`.
+
+4. **Entity: circles**
+   - Attributes:
+     - id (Primary Key)
+     - name
+     - description
+     - image_url
+
+5. **Entity: user_circle**
+   - Attributes:
+     - id (Primary Key)
+     - user_id (Foreign Key referencing student_login.id)
+     - circle_id (Foreign Key referencing circles.id)
+   - Relationship Name: Membership
+     - Many-to-Many between `student_login` and `circles`.
+
+6. **Entity: posts**
+   - Attributes:
+     - id (Primary Key)
+     - content
+     - badge
+     - image_url
+     - user_id (Foreign Key referencing student_login.id)
+     - timestamp
+     - likes
+   - Relationship Name: User Posts
+     - One-to-Many between `student_login` and `posts`.
+
+7. **Entity: user_xp**
+   - Attributes:
+     - user_id (Primary Key, Foreign Key referencing student_login.id)
+     - xp
+     - level
+     - title
+   - Relationship Name: XP Tracking
+     - One-to-One between `student_login` and `user_xp`.
+
+8. **Entity: milestones**
+   - Attributes:
+     - id (Primary Key)
+     - user_id (Foreign Key referencing student_login.id)
+     - title
+     - description
+     - icon_url
+     - unlocked
+   - Relationship Name: Achievements
+     - One-to-Many between `student_login` and `milestones`.
+
+9. **Entity: rewards**
+   - Attributes:
+     - id (Primary Key)
+     - name
+     - description
+     - image_url
+     - xp_cost
+
+10. **Entity: user_rewards**
+    - Attributes:
+      - id (Primary Key)
+      - user_id (Foreign Key referencing student_login.id)
+      - reward_id (Foreign Key referencing rewards.id)
+      - redeemed_at
+    - Relationship Name: Reward Redemption
+      - Many-to-Many between `student_login` and `rewards`.
+
+11. **Entity: xp_history**
+    - Attributes:
+      - id (Primary Key)
+      - user_id (Foreign Key referencing student_login.id)
+      - date
+      - reason
+      - amount
+    - Relationship Name: XP History
+      - One-to-Many between `student_login` and `xp_history`.
+
+12. **Entity: user_bio**
+    - Attributes:
+      - user_id (Primary Key, Foreign Key referencing student_login.id)
+      - bio
+    - Relationship Name: User Bio
+      - One-to-One between `student_login` and `user_bio`.
+
+Relationships Summary:
+- `student_login` has:
+  - One-to-Many with `user_event` (RSVP), `user_circle` (Membership), `posts` (User Posts), `milestones` (Achievements), `xp_history` (XP History), and `user_rewards` (Reward Redemption).
+  - One-to-One with `user_xp` (XP Tracking) and `user_bio` (User Bio).
+  - Many-to-Many with `events` (via `user_event`) and `circles` (via `user_circle`).
+  - Many-to-Many with `rewards` (via `user_rewards`).
+- `events` has:
+  - Many-to-Many with `student_login` (via `user_event`).
+- `circles` has:
+  - Many-to-Many with `student_login` (via `user_circle`).
+- `rewards` has:
+  - Many-to-Many with `student_login` (via `user_rewards`).
+
+Use this information to create an ER diagram using tools like Lucidchart, Draw.io, or MySQL Workbench.

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Event</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <h1 class="logo">PeerLink</h1>
+            <ul class="nav-links">
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('events') }}">Events</a></li>
+                <li><a href="{{ url_for('profile') }}">Profile</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="delete-event">
+            <h2>Delete Event</h2>
+            <form action="{{ url_for('delete_event') }}" method="POST" class="form">
+                <label for="event_id">Select Event to Delete:</label>
+                <select name="event_id" id="event_id" required>
+                    <option value="" disabled selected>Choose an event</option>
+                    {% for event in events %}
+                    <option value="{{ event.id }}">{{ event.title }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit" class="btn btn-danger">Delete Event</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 PeerLink. All rights reserved.</p>
+    </footer>
+</body>
+</html>
